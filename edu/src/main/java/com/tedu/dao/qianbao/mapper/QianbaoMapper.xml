@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.qianbao.mapper.QianbaoMapper">
+  <resultMap id="BaseResultMap" type="com.tedu.domain.qianbao.Qianbao">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="from_address" jdbcType="VARCHAR" property="fromAddress" />
+    <result column="to_address" jdbcType="VARCHAR" property="toAddress" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="coin_type" jdbcType="VARCHAR" property="coinType" />
+    <result column="txid" jdbcType="VARCHAR" property="txid" />
+    <result column="block_number" jdbcType="INTEGER" property="blockNumber" />
+    <result column="contract_id" jdbcType="VARCHAR" property="contractId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tedu.domain.qianbao.Qianbao">
+    <result column="balance" jdbcType="VARBINARY" property="balance" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, from_address, to_address, type, content, date, coin_type, txid, block_number, 
+    contract_id, status
+  </sql>
+  <sql id="Blob_Column_List">
+    balance
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tedu_qianbao
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getPageList" parameterType="java.util.HashMap"  resultMap="ResultMapWithBLOBs">
+  	    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tedu_qianbao t
+    <where>
+    	<if test='bean.id != null and  bean.id != ""'>
+    		AND t.ID = #{bean.id}
+    	</if>
+    	<if test='bean.fromAddress != null and bean.fromAddress!= ""'>
+    		and t.from_address = #{bean.fromAddress}
+    	</if>
+    	<if test='bean.type != null and  bean.type != ""'>
+    		AND t.type = #{bean.type}
+    	</if>
+    	<if test='bean.coinType != null and  bean.coinType != ""'>
+    		AND t.coin_type = #{bean.coinType}
+    	</if>
+    	<if test='bean.status != null and  bean.status != ""'>
+    		AND t.status = #{bean.status}
+    	</if>
+    </where>
+		<!-- 分页条 -->
+		LIMIT #{offset} ,#{rows}
+		<!-- /分页条 -->
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tedu_qianbao
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tedu.domain.qianbao.Qianbao">
+    insert into tedu_qianbao (id, userId, from_address, 
+      to_address, type, content, 
+      date, coin_type, txid, 
+      block_number, contract_id, status, 
+      balance)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{fromAddress,jdbcType=VARCHAR}, 
+      #{toAddress,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{coinType,jdbcType=VARCHAR}, #{txid,jdbcType=VARCHAR}, 
+      #{blockNumber,jdbcType=INTEGER}, #{contractId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{balance,jdbcType=VARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tedu.domain.qianbao.Qianbao">
+    insert into tedu_qianbao
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="fromAddress != null">
+        from_address,
+      </if>
+      <if test="toAddress != null">
+        to_address,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="coinType != null">
+        coin_type,
+      </if>
+      <if test="txid != null">
+        txid,
+      </if>
+      <if test="blockNumber != null">
+        block_number,
+      </if>
+      <if test="contractId != null">
+        contract_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="fromAddress != null">
+        #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null">
+        #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coinType != null">
+        #{coinType,jdbcType=VARCHAR},
+      </if>
+      <if test="txid != null">
+        #{txid,jdbcType=VARCHAR},
+      </if>
+      <if test="blockNumber != null">
+        #{blockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="contractId != null">
+        #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tedu.domain.qianbao.Qianbao">
+    update tedu_qianbao
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="fromAddress != null">
+        from_address = #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null">
+        to_address = #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coinType != null">
+        coin_type = #{coinType,jdbcType=VARCHAR},
+      </if>
+      <if test="txid != null">
+        txid = #{txid,jdbcType=VARCHAR},
+      </if>
+      <if test="blockNumber != null">
+        block_number = #{blockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="contractId != null">
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tedu.domain.qianbao.Qianbao">
+    update tedu_qianbao
+    set userId = #{userid,jdbcType=INTEGER},
+      from_address = #{fromAddress,jdbcType=VARCHAR},
+      to_address = #{toAddress,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      coin_type = #{coinType,jdbcType=VARCHAR},
+      txid = #{txid,jdbcType=VARCHAR},
+      block_number = #{blockNumber,jdbcType=INTEGER},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tedu.domain.qianbao.Qianbao">
+    update tedu_qianbao
+    set userId = #{userid,jdbcType=INTEGER},
+      from_address = #{fromAddress,jdbcType=VARCHAR},
+      to_address = #{toAddress,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      coin_type = #{coinType,jdbcType=VARCHAR},
+      txid = #{txid,jdbcType=VARCHAR},
+      block_number = #{blockNumber,jdbcType=INTEGER},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

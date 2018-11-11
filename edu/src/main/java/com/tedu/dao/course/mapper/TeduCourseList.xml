@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+******************************************************************************
+* 数据库表：TEDU_COURSE_LIST
+* 表的名称：
+* 对应实体：com.tedu.domain.course.TeduCourseList
+* 开发日期：2018-08-18
+******************************************************************************
+-->
+<mapper namespace="com.tedu.dao.course.mapper.ITeduCourseList">
+
+    <!--
+    **************************************************************************
+    * 1.新增一条数据
+    * 注: 根据Bean实体执行新增操作.
+    **************************************************************************
+    -->
+    <insert id="getInsert"
+            parameterType="com.tedu.domain.course.TeduCourseList"
+            useGeneratedKeys="true"
+            keyProperty="id">
+    
+            INSERT   /* getInsert+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+              INTO   TEDU_COURSE_LIST         /*  */ 
+                    (
+                     COURSE_ID                /* 课程id */ 
+                    ,TITLE                    /* 课程下面的每一讲的标题 */ 
+                    ,DATE                     /* 每一上传的日期 */ 
+                    ,RESOURCE                 /* 资源地址 */ 
+                    ,STATUS                   /* 数据状态 */ 
+                    )
+            VALUES  (
+                     #{courseId}              /* 课程id */ 
+                    ,#{title}                 /* 课程下面的每一讲的标题 */ 
+                    ,#{date}                  /* 每一上传的日期 */ 
+                    ,#{resource}              /* 资源地址 */ 
+                    ,#{status}                /* 数据状态 */ 
+                    )
+         
+    </insert>
+
+
+    <!--
+    **************************************************************************
+    * 2.删除一条数据
+    * 注: 根据Bean实体的主键ID执行删除操作.
+    **************************************************************************
+    -->
+    <delete id="getDelete"
+            parameterType="int">
+    
+            DELETE   /* getDelete+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+              FROM   TEDU_COURSE_LIST      /*  */ 
+             WHERE   ID = #{_parameter}    /* 主键 */ 
+         
+    </delete>
+
+
+    <!--
+    **************************************************************************
+    * 3.变更一条数据
+    * 注: 根据Bean实体的主键ID执行变更操作.
+    **************************************************************************
+    -->
+    <update id="getUpdate"
+            parameterType="com.tedu.domain.course.TeduCourseList">
+    
+            UPDATE   /* getUpdate+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     TEDU_COURSE_LIST                     /*  */ 
+               SET   COURSE_ID           = #{courseId}    /* 课程id */ 
+                    ,TITLE               = #{title}       /* 课程下面的每一讲的标题 */ 
+                    ,DATE                = #{date}        /* 每一上传的日期 */ 
+                    ,RESOURCE            = #{resource}    /* 资源地址 */ 
+                    ,STATUS              = #{status}      /* 数据状态 */ 
+             WHERE   ID                  = #{id}          /* 主键 */ 
+         
+    </update>
+
+
+    <!--
+    **************************************************************************
+    * 4.获取一个Bean实体
+    * 注: 根据Bean实体的主键ID获取一个Bean实体.
+    **************************************************************************
+    -->
+    <select id="getBean"
+            parameterType="int"
+            resultType="com.tedu.domain.course.TeduCourseList">
+    
+            SELECT   /* getBean+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     tcl.ID                   AS "id"          /* 主键 */ 
+                    ,tcl.COURSE_ID            AS "courseId"    /* 课程id */ 
+                    ,tcl.TITLE                AS "title"       /* 课程下面的每一讲的标题 */ 
+                    ,tcl.DATE                 AS "date"        /* 每一上传的日期 */ 
+                    ,tcl.RESOURCE             AS "resource"    /* 资源地址 */ 
+                    ,tcl.STATUS               AS "status"      /* 数据状态 */ 
+              FROM   TEDU_COURSE_LIST             tcl          /*  */ 
+             WHERE   tcl.ID = #{_parameter}                    /* 主键 */ 
+         
+    </select>
+
+
+    <!--
+    **************************************************************************
+    * 5.条件查询
+    * 注: 支持多条件查询、模糊查询、日期比较查询等操作.
+    **************************************************************************
+    -->
+    <select id="getList"
+            parameterType="com.tedu.domain.course.TeduCourseList"
+            resultType="com.tedu.domain.course.TeduCourseList">
+    
+            SELECT   /* getList+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     tcl.ID                   AS "id"          /* 主键 */ 
+                    ,tcl.COURSE_ID            AS "courseId"    /* 课程id */ 
+                    ,tcl.TITLE                AS "title"       /* 课程下面的每一讲的标题 */ 
+                    ,tcl.DATE                 AS "date"        /* 每一上传的日期 */ 
+                    ,tcl.RESOURCE             AS "resource"    /* 资源地址 */ 
+                    ,tcl.STATUS               AS "status"      /* 数据状态 */ 
+              FROM   TEDU_COURSE_LIST             tcl          /*  */ 
+             WHERE   1 = 1
+        
+             <if test='id != -1'>
+               AND   tcl.ID = #{id} /* 主键 */ 
+             </if>
+        
+             <if test='courseId != -1'>
+               AND   tcl.COURSE_ID = #{courseId} /* 课程id */ 
+             </if>
+        
+             <if test='title != null and title != "" and title != "null" and title != "undefined"'>
+               AND   tcl.TITLE = #{title} /* 课程下面的每一讲的标题 */ 
+             </if>
+        
+             <if test='date != null'>
+               AND   date_format(tcl.DATE ,'%Y-%m-%d') = #{dateChar} /* 每一上传的日期 */ 
+             </if>
+        
+             <if test='resource != null and resource != "" and resource != "null" and resource != "undefined"'>
+               AND   tcl.RESOURCE = #{resource} /* 资源地址 */ 
+             </if>
+        
+             <if test='status != -1'>
+               AND   tcl.STATUS = #{status} /* 数据状态 */ 
+             </if>
+         
+         
+         
+             <!-- 常用自定义字段 -->             
+             <if test='titleLike != null and titleLike != "" and titleLike != "null" and titleLike != "undefined"'>
+               AND   tcl.TITLE like concat('%',#{titleLike},'%')  /* 课程下面的每一讲的标题(全模糊) */ 
+             </if>
+             
+             <if test='titleAfter != null and titleAfter != "" and titleAfter != "null" and titleAfter != "undefined"'>
+               AND   tcl.TITLE like concat('',#{titleAfter},'%')  /* 课程下面的每一讲的标题(后缀模糊) */ 
+             </if>
+             
+             <if test='dateBegin != null and dateBegin != "" and dateBegin != "null" and dateBegin != "undefined"'>
+               AND   date_format(tcl.DATE ,'%Y-%m-%d') <![CDATA[>=]]> #{dateBegin}  /* 每一上传的日期(起始日期) */ 
+             </if>
+             
+             <if test='dateEnd != null and dateEnd != "" and dateEnd != "null" and dateEnd != "undefined"'>
+               AND   date_format(tcl.DATE ,'%Y-%m-%d') <![CDATA[<=]]> #{dateEnd}  /* 每一上传的日期(结束日期) */ 
+             </if>
+             
+             <if test='resourceLike != null and resourceLike != "" and resourceLike != "null" and resourceLike != "undefined"'>
+               AND   tcl.RESOURCE like concat('%',#{resourceLike},'%')  /* 资源地址(全模糊) */ 
+             </if>
+             
+             <if test='resourceAfter != null and resourceAfter != "" and resourceAfter != "null" and resourceAfter != "undefined"'>
+               AND   tcl.RESOURCE like concat('',#{resourceAfter},'%')  /* 资源地址(后缀模糊) */ 
+             </if>
+             <!-- /常用自定义字段 -->
+         
+             <if test='orderBy != null and orderBy != ""'>
+               ORDER BY   ${orderBy}  /* 排序 */ 
+             </if>
+         
+    </select>
+
+
+    <!--
+    **************************************************************************
+    * 6.分页查询
+    * 注: 支持分页查询、多条件查询、模糊查询、日期比较查询等操作.
+    **************************************************************************
+    -->
+    <select id="getPageList"
+            parameterType="java.util.HashMap"
+            resultType="com.tedu.domain.course.TeduCourseList">
+    
+            SELECT   /* getPageList+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     tcl.ID                   AS "id"          /* 主键 */ 
+                    ,tcl.COURSE_ID            AS "courseId"    /* 课程id */ 
+                    ,tcl.TITLE                AS "title"       /* 课程下面的每一讲的标题 */ 
+                    ,tcl.DATE                 AS "date"        /* 每一上传的日期 */ 
+                    ,tcl.RESOURCE             AS "resource"    /* 资源地址 */ 
+                    ,tcl.STATUS               AS "status"      /* 数据状态 */ 
+              FROM   TEDU_COURSE_LIST             tcl          /*  */ 
+             WHERE   1 = 1
+         
+             <if test='bean != null'>
+        
+             <if test='bean.id != -1'>
+               AND   tcl.ID = #{bean.id} /* 主键 */ 
+             </if>
+        
+             <if test='bean.courseId != -1'>
+               AND   tcl.COURSE_ID = #{bean.courseId} /* 课程id */ 
+             </if>
+        
+             <if test='bean.title != null and bean.title != "" and bean.title != "null" and bean.title != "undefined"'>
+               AND   tcl.TITLE = #{bean.title} /* 课程下面的每一讲的标题 */ 
+             </if>
+        
+             <if test='bean.date != null'>
+               AND   date_format(tcl.DATE ,'%Y-%m-%d') = #{bean.dateChar} /* 每一上传的日期 */ 
+             </if>
+        
+             <if test='bean.resource != null and bean.resource != "" and bean.resource != "null" and bean.resource != "undefined"'>
+               AND   tcl.RESOURCE = #{bean.resource} /* 资源地址 */ 
+             </if>
+        
+             <if test='bean.status != -1'>
+               AND   tcl.STATUS = #{bean.status} /* 数据状态 */ 
+             </if>
+         
+         
+         
+             <!-- 常用自定义字段 -->             
+             <if test='bean.titleLike != null and bean.titleLike != "" and bean.titleLike != "null" and bean.titleLike != "undefined"'>
+               AND   tcl.TITLE like concat('%',#{bean.titleLike},'%')  /* 课程下面的每一讲的标题(全模糊) */ 
+             </if>
+             
+             <if test='bean.titleAfter != null and bean.titleAfter != "" and bean.titleAfter != "null" and bean.titleAfter != "undefined"'>
+               AND   tcl.TITLE like concat('',#{bean.titleAfter},'%')  /* 课程下面的每一讲的标题(后缀模糊) */ 
+             </if>
+             
+             <if test='bean.dateBegin != null and bean.dateBegin != "" and bean.dateBegin != "null" and bean.dateBegin != "undefined"'>
+               AND   date_format(tcl.DATE ,'%Y-%m-%d') <![CDATA[>=]]> #{bean.dateBegin}  /* 每一上传的日期(起始日期) */ 
+             </if>
+             
+             <if test='bean.dateEnd != null and bean.dateEnd != "" and bean.dateEnd != "null" and bean.dateEnd != "undefined"'>
+               AND   date_format(tcl.DATE ,'%Y-%m-%d') <![CDATA[<=]]> #{bean.dateEnd}  /* 每一上传的日期(结束日期) */ 
+             </if>
+             
+             <if test='bean.resourceLike != null and bean.resourceLike != "" and bean.resourceLike != "null" and bean.resourceLike != "undefined"'>
+               AND   tcl.RESOURCE like concat('%',#{bean.resourceLike},'%')  /* 资源地址(全模糊) */ 
+             </if>
+             
+             <if test='bean.resourceAfter != null and bean.resourceAfter != "" and bean.resourceAfter != "null" and bean.resourceAfter != "undefined"'>
+               AND   tcl.RESOURCE like concat('',#{bean.resourceAfter},'%')  /* 资源地址(后缀模糊) */ 
+             </if>
+             <!-- /常用自定义字段 -->
+         
+             <if test='bean.orderBy != null and bean.orderBy != ""'>
+               ORDER BY   ${bean.orderBy}  /* 排序 */ 
+             </if>
+             
+             </if>
+             
+             <!-- 分页条 -->
+             LIMIT #{offset} ,#{rows}
+             <!-- /分页条 -->
+         
+    </select>
+
+
+    <!--
+    **************************************************************************
+    * 7.删除一条数据
+    * 注: 根据Bean实体的主键ID执行删除操作.
+    **************************************************************************
+    -->
+    <delete id="getDeleteBean"
+            parameterType="com.tedu.domain.course.TeduCourseList">
+    
+            DELETE   /* getDeleteBean+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+              FROM   TEDU_COURSE_LIST    /*  */ 
+             WHERE   ID = #{id}          /* 主键 */ 
+         
+    </delete>
+
+
+    <!--
+    **************************************************************************
+    * 8.删除多条数据
+    * 注: 根据拼接有限个主键ID执行多条数据的删除操作.
+    **************************************************************************
+    -->
+    <delete id="getDeleteIn"
+            parameterType="int">
+    
+            DELETE   /* getDeleteIn+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+              FROM   TEDU_COURSE_LIST   /*  */ 
+             WHERE   ID in              /* 主键 */ 
+             <foreach  collection="array" item="item" open="(" separator="," close=")">
+             		#{item}
+             </foreach>
+         
+    </delete>
+
+
+    <!--
+    **************************************************************************
+    * 9.条件删除数据
+    * 注: 根据多种条件执行批量删除操作.
+    **************************************************************************
+    -->
+    <delete id="getDeleteBy"
+            parameterType="com.tedu.domain.course.TeduCourseList">
+    
+            DELETE   /* getDeleteBy+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+              FROM   TEDU_COURSE_LIST  /*  */ 
+             WHERE   1 = 1
+        
+             <if test='id != -1'>
+               AND   ID = #{id} /* 主键 */ 
+             </if>
+        
+             <if test='courseId != -1'>
+               AND   COURSE_ID = #{courseId} /* 课程id */ 
+             </if>
+        
+             <if test='title != null and title != "" and title != "null" and title != "undefined"'>
+               AND   TITLE = #{title} /* 课程下面的每一讲的标题 */ 
+             </if>
+        
+             <if test='date != null'>
+               AND   date_format(DATE ,'%Y-%m-%d') = #{dateChar} /* 每一上传的日期 */ 
+             </if>
+        
+             <if test='resource != null and resource != "" and resource != "null" and resource != "undefined"'>
+               AND   RESOURCE = #{resource} /* 资源地址 */ 
+             </if>
+        
+             <if test='status != -1'>
+               AND   STATUS = #{status} /* 数据状态 */ 
+             </if>
+         
+         
+         
+             <!-- 常用自定义字段 -->             
+             <if test='titleLike != null and titleLike != "" and titleLike != "null" and titleLike != "undefined"'>
+               AND   TITLE like concat('%',#{titleLike},'%')  /* 课程下面的每一讲的标题(全模糊) */ 
+             </if>
+             
+             <if test='titleAfter != null and titleAfter != "" and titleAfter != "null" and titleAfter != "undefined"'>
+               AND   TITLE like concat('',#{titleAfter},'%')  /* 课程下面的每一讲的标题(后缀模糊) */ 
+             </if>
+             
+             <if test='dateBegin != null and dateBegin != "" and dateBegin != "null" and dateBegin != "undefined"'>
+               AND   date_format(DATE ,'%Y-%m-%d') <![CDATA[>=]]> #{dateBegin}  /* 每一上传的日期(起始日期) */ 
+             </if>
+             
+             <if test='dateEnd != null and dateEnd != "" and dateEnd != "null" and dateEnd != "undefined"'>
+               AND   date_format(DATE ,'%Y-%m-%d') <![CDATA[<=]]> #{dateEnd}  /* 每一上传的日期(结束日期) */ 
+             </if>
+             
+             <if test='resourceLike != null and resourceLike != "" and resourceLike != "null" and resourceLike != "undefined"'>
+               AND   RESOURCE like concat('%',#{resourceLike},'%')  /* 资源地址(全模糊) */ 
+             </if>
+             
+             <if test='resourceAfter != null and resourceAfter != "" and resourceAfter != "null" and resourceAfter != "undefined"'>
+               AND   RESOURCE like concat('',#{resourceAfter},'%')  /* 资源地址(后缀模糊) */ 
+             </if>
+             <!-- /常用自定义字段 -->
+         
+         
+    </delete>
+
+
+    <!--
+    **************************************************************************
+    * 10.验证一条数据是否存在
+    * 注: 根据主键ID验证该数据是否存在 ,并返回数据量.
+    **************************************************************************
+    -->
+    <select id="getCheck"
+            parameterType="int"
+            resultType="java.lang.Integer">
+    
+            SELECT   /* getCheck+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     count(1)
+              FROM   TEDU_COURSE_LIST        /*  */ 
+             WHERE   ID = #{_parameter}      /* 主键 */ 
+         
+    </select>
+
+
+    <!--
+    **************************************************************************
+    * 11.验证多条件数据是否存在
+    * 注: 根据多条件验证该数据是否存在 ,并返回数据量.
+    **************************************************************************
+    -->
+    <select id="getCheckBy"
+            parameterType="com.tedu.domain.course.TeduCourseList"
+            resultType="java.lang.Integer">
+    
+            SELECT   /* getCheckBy+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     count(1)
+              FROM   TEDU_COURSE_LIST  /*  */ 
+             WHERE   1 = 1
+        
+             <if test='id != -1'>
+               AND   ID = #{id} /* 主键 */ 
+             </if>
+        
+             <if test='courseId != -1'>
+               AND   COURSE_ID = #{courseId} /* 课程id */ 
+             </if>
+        
+             <if test='title != null and title != "" and title != "null" and title != "undefined"'>
+               AND   TITLE = #{title} /* 课程下面的每一讲的标题 */ 
+             </if>
+        
+             <if test='date != null'>
+               AND   date_format(DATE ,'%Y-%m-%d') = #{dateChar} /* 每一上传的日期 */ 
+             </if>
+        
+             <if test='resource != null and resource != "" and resource != "null" and resource != "undefined"'>
+               AND   RESOURCE = #{resource} /* 资源地址 */ 
+             </if>
+        
+             <if test='status != -1'>
+               AND   STATUS = #{status} /* 数据状态 */ 
+             </if>
+         
+         
+         
+             <!-- 常用自定义字段 -->             
+             <if test='titleLike != null and titleLike != "" and titleLike != "null" and titleLike != "undefined"'>
+               AND   TITLE like concat('%',#{titleLike},'%')  /* 课程下面的每一讲的标题(全模糊) */ 
+             </if>
+             
+             <if test='titleAfter != null and titleAfter != "" and titleAfter != "null" and titleAfter != "undefined"'>
+               AND   TITLE like concat('',#{titleAfter},'%')  /* 课程下面的每一讲的标题(后缀模糊) */ 
+             </if>
+             
+             <if test='dateBegin != null and dateBegin != "" and dateBegin != "null" and dateBegin != "undefined"'>
+               AND   date_format(DATE ,'%Y-%m-%d') <![CDATA[>=]]> #{dateBegin}  /* 每一上传的日期(起始日期) */ 
+             </if>
+             
+             <if test='dateEnd != null and dateEnd != "" and dateEnd != "null" and dateEnd != "undefined"'>
+               AND   date_format(DATE ,'%Y-%m-%d') <![CDATA[<=]]> #{dateEnd}  /* 每一上传的日期(结束日期) */ 
+             </if>
+             
+             <if test='resourceLike != null and resourceLike != "" and resourceLike != "null" and resourceLike != "undefined"'>
+               AND   RESOURCE like concat('%',#{resourceLike},'%')  /* 资源地址(全模糊) */ 
+             </if>
+             
+             <if test='resourceAfter != null and resourceAfter != "" and resourceAfter != "null" and resourceAfter != "undefined"'>
+               AND   RESOURCE like concat('',#{resourceAfter},'%')  /* 资源地址(后缀模糊) */ 
+             </if>
+             <!-- /常用自定义字段 -->
+         
+    </select>
+
+
+    <!--
+    **************************************************************************
+    * 12.按条件变更一条数据
+    * 注: 根据Bean实体的主键ID,只对部分字段执行变更操作.
+    **************************************************************************
+    -->
+    <update id="getUpdateBy"
+            parameterType="com.tedu.domain.course.TeduCourseList">
+    
+            UPDATE   /* getUpdateBy+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     TEDU_COURSE_LIST                     /*  */ 
+               SET   ID                  = #{id}          /* 主键 */ 
+                     <if test='courseId != -1'>
+                    ,COURSE_ID           = #{courseId}    /* 课程id */ 
+                     </if>
+                     <if test='title != null and title != "" and title != "null" and title != "undefined"'>
+                    ,TITLE               = #{title}       /* 课程下面的每一讲的标题 */ 
+                     </if>
+                     <if test='date != null'>
+                    ,DATE                = #{date}        /* 每一上传的日期 */ 
+                     </if>
+                     <if test='resource != null and resource != "" and resource != "null" and resource != "undefined"'>
+                    ,RESOURCE            = #{resource}    /* 资源地址 */ 
+                     </if>
+                     <if test='status != -1'>
+                    ,STATUS              = #{status}      /* 数据状态 */ 
+                     </if>
+             WHERE   ID                  = #{id}          /* 主键 */ 
+         
+    </update>
+
+
+    <!--
+    **************************************************************************
+    * 13.InsertBatch - 批量新增数据
+    * 注: 根据List对象执行批量新增操作.
+    **************************************************************************
+    -->
+    <insert id="getInsertBatch"
+            parameterType="java.util.List">
+    
+            INSERT   /* getInsertBatch+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+              INTO   TEDU_COURSE_LIST            /*  */ 
+                    (
+                     COURSE_ID                   /* 课程id */ 
+                    ,TITLE                       /* 课程下面的每一讲的标题 */ 
+                    ,DATE                        /* 每一上传的日期 */ 
+                    ,RESOURCE                    /* 资源地址 */ 
+                    ,STATUS                      /* 数据状态 */ 
+                    )
+            VALUES  
+            <foreach collection="list" item="item" index="index" separator=",">
+                   (
+                     #{item.courseId}            /* 课程id */ 
+                    ,#{item.title}               /* 课程下面的每一讲的标题 */ 
+                    ,#{item.date}                /* 每一上传的日期 */ 
+                    ,#{item.resource}            /* 资源地址 */ 
+                    ,#{item.status}              /* 数据状态 */ 
+                    )
+            </foreach>
+         
+    </insert>
+
+
+    <!--
+    **************************************************************************
+    * 14.UpdateBatch - 批量更新数据
+    * 注: 根据List对象执行批量更新操作.
+    **************************************************************************
+    -->
+    <update id="getUpdateBatch"
+            parameterType="java.util.List">
+    
+            <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE   /* getUpdateBatch+@com.tedu.dao.course.mapper.TeduCourseList.xml */ 
+                     TEDU_COURSE_LIST                        /*  */ 
+               SET   ID               = #{item.id}           /* 主键 */ 
+                     <if test='item.courseId != -1'>
+                    ,COURSE_ID        = #{item.courseId}     /* 课程id */ 
+                     </if>
+                     <if test='item.title != null and item.title != "" and item.title != "null" and item.title != "undefined"'>
+                    ,TITLE            = #{item.title}        /* 课程下面的每一讲的标题 */ 
+                     </if>
+                     <if test='item.date != null'>
+                    ,DATE             = #{item.date}         /* 每一上传的日期 */ 
+                     </if>
+                     <if test='item.resource != null and item.resource != "" and item.resource != "null" and item.resource != "undefined"'>
+                    ,RESOURCE         = #{item.resource}     /* 资源地址 */ 
+                     </if>
+                     <if test='item.status != -1'>
+                    ,STATUS           = #{item.status}       /* 数据状态 */ 
+                     </if>
+             WHERE   ID               = #{item.id}           /* 主键 */ 
+            </foreach>
+         
+    </update>
+
+
+</mapper>

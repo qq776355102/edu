@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.duihuanjifen.mapper.DuihuanJifenMapper">
+  <resultMap id="BaseResultMap" type="com.tedu.domain.duihuanjifen.DuihuanJifen">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rate" jdbcType="VARCHAR" property="rate" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, rate, date, status, user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tedu_jifen_duihuan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+    <select id="getLast"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tedu_jifen_duihuan
+    order by data desc limit 1
+  </select>
+  
+  
+   
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tedu_jifen_duihuan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tedu.domain.duihuanjifen.DuihuanJifen">
+    insert into tedu_jifen_duihuan (id, rate, date, 
+      status, user_id)
+    values (#{id,jdbcType=INTEGER}, #{rate,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tedu.domain.duihuanjifen.DuihuanJifen">
+    insert into tedu_jifen_duihuan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tedu.domain.duihuanjifen.DuihuanJifen">
+    update tedu_jifen_duihuan
+    <set>
+      <if test="rate != null">
+        rate = #{rate,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tedu.domain.duihuanjifen.DuihuanJifen">
+    update tedu_jifen_duihuan
+    set rate = #{rate,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

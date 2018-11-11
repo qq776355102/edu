@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.album.mapper.AlbumMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tedu.domain.album.Album">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="count" jdbcType="INTEGER" property="count" />
+		<result column="picture" jdbcType="VARCHAR" property="picture" />
+		<result column="date" jdbcType="TIMESTAMP" property="date" />
+		<result column="introduction" jdbcType="VARCHAR"
+			property="introduction" />
+		<result column="notes_toBuy" jdbcType="VARCHAR"
+			property="notesTobuy" />
+		<result column="price" jdbcType="DECIMAL" property="price" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, name, status, count, picture, date,
+		introduction,
+		notes_toBuy, price
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_album
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="getAlbumList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_album where search order by date desc
+	</select>
+	<select id="selectByUserIdAndName" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_album where user_id = #{userId,jdbcType=INTEGER} and name =
+		#{name,jdbcType=VARCHAR}
+	</select>
+
+
+	<select id="selectByUserId" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_album where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+
+	<select id="searchLikeAlbum" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_album
+		where name like concat('%',#{albumName},'%') limit
+		#{offset} ,#{rows}
+	</select>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from tedu_album
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tedu.domain.album.Album">
+		insert into tedu_album (id,
+		user_id, name,
+		status, count, picture,
+		date, introduction, notes_toBuy,
+		price)
+		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER},
+		#{count,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR},
+		#{date,jdbcType=TIMESTAMP}, #{introduction,jdbcType=VARCHAR},
+		#{notesTobuy,jdbcType=VARCHAR},
+		#{price,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tedu.domain.album.Album">
+		insert into tedu_album
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="picture != null">
+				picture,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="introduction != null">
+				introduction,
+			</if>
+			<if test="notesTobuy != null">
+				notes_toBuy,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="count != null">
+				#{count,jdbcType=INTEGER},
+			</if>
+			<if test="picture != null">
+				#{picture,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="introduction != null">
+				#{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="notesTobuy != null">
+				#{notesTobuy,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tedu.domain.album.Album">
+		update tedu_album
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="count != null">
+				count = #{count,jdbcType=INTEGER},
+			</if>
+			<if test="picture != null">
+				picture = #{picture,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				date = #{date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="introduction != null">
+				introduction = #{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="notesTobuy != null">
+				notes_toBuy = #{notesTobuy,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tedu.domain.album.Album">
+		update tedu_album
+		set user_id =
+		#{userId,jdbcType=INTEGER},
+		name = #{name,jdbcType=VARCHAR},
+		status =
+		#{status,jdbcType=INTEGER},
+		count = #{count,jdbcType=INTEGER},
+		picture =
+		#{picture,jdbcType=VARCHAR},
+		date = #{date,jdbcType=TIMESTAMP},
+		introduction = #{introduction,jdbcType=VARCHAR},
+		notes_toBuy =
+		#{notesTobuy,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL}
+		where
+		id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

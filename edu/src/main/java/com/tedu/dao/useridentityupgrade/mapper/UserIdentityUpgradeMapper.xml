@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.useridentityupgrade.mapper.UserIdentityUpgradeMapper">
+  <resultMap id="BaseResultMap" type="com.tedu.domain.useridentityupgrade.UserIdentityUpgrade">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="is_pass" jdbcType="BIT" property="isPass" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, date, is_pass, reason, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tedu_user_identity_upgrade
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+    <select id="getFutureIdentityUpgrades" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tedu_user_identity_upgrade
+    where status = 1 and is_pass = false
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tedu_user_identity_upgrade
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tedu.domain.useridentityupgrade.UserIdentityUpgrade">
+    insert into tedu_user_identity_upgrade (id, user_id, date, 
+      is_pass, reason, status)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, 
+      #{isPass,jdbcType=BIT}, #{reason,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tedu.domain.useridentityupgrade.UserIdentityUpgrade">
+    insert into tedu_user_identity_upgrade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="isPass != null">
+        is_pass,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPass != null">
+        #{isPass,jdbcType=BIT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tedu.domain.useridentityupgrade.UserIdentityUpgrade">
+    update tedu_user_identity_upgrade
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPass != null">
+        is_pass = #{isPass,jdbcType=BIT},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tedu.domain.useridentityupgrade.UserIdentityUpgrade">
+    update tedu_user_identity_upgrade
+    set user_id = #{userId,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP},
+      is_pass = #{isPass,jdbcType=BIT},
+      reason = #{reason,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

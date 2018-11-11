@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.tokentransaction.mapper.TokenTransactionMapper">
+  <resultMap id="BaseResultMap" type="com.tedu.domain.tokentransaction.TokenTransaction">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="block_number" jdbcType="INTEGER" property="blockNumber" />
+    <result column="time_stamp" jdbcType="VARCHAR" property="timeStamp" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="nonce" jdbcType="VARCHAR" property="nonce" />
+    <result column="block_hash" jdbcType="VARCHAR" property="blockHash" />
+    <result column="from" jdbcType="VARCHAR" property="from" />
+    <result column="contract_address" jdbcType="VARCHAR" property="contractAddress" />
+    <result column="to" jdbcType="VARCHAR" property="to" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="token_name" jdbcType="VARCHAR" property="tokenName" />
+    <result column="token_symbol" jdbcType="VARCHAR" property="tokenSymbol" />
+    <result column="token_decimal" jdbcType="VARCHAR" property="tokenDecimal" />
+    <result column="transaction_index" jdbcType="INTEGER" property="transactionIndex" />
+    <result column="gas" jdbcType="VARCHAR" property="gas" />
+    <result column="gas_price" jdbcType="VARCHAR" property="gasPrice" />
+    <result column="gas_used" jdbcType="VARCHAR" property="gasUsed" />
+    <result column="cumulative_gas_used" jdbcType="VARCHAR" property="cumulativeGasUsed" />
+    <result column="input" jdbcType="VARCHAR" property="input" />
+    <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, block_number, time_stamp, hash, nonce, block_hash, from, contract_address, to, 
+    value, token_name, token_symbol, token_decimal, transaction_index, gas, gas_price, 
+    gas_used, cumulative_gas_used, input, confirmations, type, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tedu_token_transaction
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tedu_token_transaction
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tedu.domain.tokentransaction.TokenTransaction">
+    insert into tedu_token_transaction (id, block_number, time_stamp, 
+      hash, nonce, block_hash, 
+      from, contract_address, to, 
+      value, token_name, token_symbol, 
+      token_decimal, transaction_index, gas, 
+      gas_price, gas_used, cumulative_gas_used, 
+      input, confirmations, type, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{blockNumber,jdbcType=INTEGER}, #{timeStamp,jdbcType=VARCHAR}, 
+      #{hash,jdbcType=VARCHAR}, #{nonce,jdbcType=VARCHAR}, #{blockHash,jdbcType=VARCHAR}, 
+      #{from,jdbcType=VARCHAR}, #{contractAddress,jdbcType=VARCHAR}, #{to,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{tokenName,jdbcType=VARCHAR}, #{tokenSymbol,jdbcType=VARCHAR}, 
+      #{tokenDecimal,jdbcType=VARCHAR}, #{transactionIndex,jdbcType=INTEGER}, #{gas,jdbcType=VARCHAR}, 
+      #{gasPrice,jdbcType=VARCHAR}, #{gasUsed,jdbcType=VARCHAR}, #{cumulativeGasUsed,jdbcType=VARCHAR}, 
+      #{input,jdbcType=VARCHAR}, #{confirmations,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tedu.domain.tokentransaction.TokenTransaction">
+    insert into tedu_token_transaction
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="blockNumber != null">
+        block_number,
+      </if>
+      <if test="timeStamp != null">
+        time_stamp,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="nonce != null">
+        nonce,
+      </if>
+      <if test="blockHash != null">
+        block_hash,
+      </if>
+      <if test="from != null">
+        from,
+      </if>
+      <if test="contractAddress != null">
+        contract_address,
+      </if>
+      <if test="to != null">
+        to,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="tokenName != null">
+        token_name,
+      </if>
+      <if test="tokenSymbol != null">
+        token_symbol,
+      </if>
+      <if test="tokenDecimal != null">
+        token_decimal,
+      </if>
+      <if test="transactionIndex != null">
+        transaction_index,
+      </if>
+      <if test="gas != null">
+        gas,
+      </if>
+      <if test="gasPrice != null">
+        gas_price,
+      </if>
+      <if test="gasUsed != null">
+        gas_used,
+      </if>
+      <if test="cumulativeGasUsed != null">
+        cumulative_gas_used,
+      </if>
+      <if test="input != null">
+        input,
+      </if>
+      <if test="confirmations != null">
+        confirmations,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="blockNumber != null">
+        #{blockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="timeStamp != null">
+        #{timeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="nonce != null">
+        #{nonce,jdbcType=VARCHAR},
+      </if>
+      <if test="blockHash != null">
+        #{blockHash,jdbcType=VARCHAR},
+      </if>
+      <if test="from != null">
+        #{from,jdbcType=VARCHAR},
+      </if>
+      <if test="contractAddress != null">
+        #{contractAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="to != null">
+        #{to,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenName != null">
+        #{tokenName,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenSymbol != null">
+        #{tokenSymbol,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenDecimal != null">
+        #{tokenDecimal,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionIndex != null">
+        #{transactionIndex,jdbcType=INTEGER},
+      </if>
+      <if test="gas != null">
+        #{gas,jdbcType=VARCHAR},
+      </if>
+      <if test="gasPrice != null">
+        #{gasPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="gasUsed != null">
+        #{gasUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="cumulativeGasUsed != null">
+        #{cumulativeGasUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="input != null">
+        #{input,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmations != null">
+        #{confirmations,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tedu.domain.tokentransaction.TokenTransaction">
+    update tedu_token_transaction
+    <set>
+      <if test="blockNumber != null">
+        block_number = #{blockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="timeStamp != null">
+        time_stamp = #{timeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="hash != null">
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="nonce != null">
+        nonce = #{nonce,jdbcType=VARCHAR},
+      </if>
+      <if test="blockHash != null">
+        block_hash = #{blockHash,jdbcType=VARCHAR},
+      </if>
+      <if test="from != null">
+        from = #{from,jdbcType=VARCHAR},
+      </if>
+      <if test="contractAddress != null">
+        contract_address = #{contractAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="to != null">
+        to = #{to,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenName != null">
+        token_name = #{tokenName,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenSymbol != null">
+        token_symbol = #{tokenSymbol,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenDecimal != null">
+        token_decimal = #{tokenDecimal,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionIndex != null">
+        transaction_index = #{transactionIndex,jdbcType=INTEGER},
+      </if>
+      <if test="gas != null">
+        gas = #{gas,jdbcType=VARCHAR},
+      </if>
+      <if test="gasPrice != null">
+        gas_price = #{gasPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="gasUsed != null">
+        gas_used = #{gasUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="cumulativeGasUsed != null">
+        cumulative_gas_used = #{cumulativeGasUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="input != null">
+        input = #{input,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmations != null">
+        confirmations = #{confirmations,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tedu.domain.tokentransaction.TokenTransaction">
+    update tedu_token_transaction
+    set block_number = #{blockNumber,jdbcType=INTEGER},
+      time_stamp = #{timeStamp,jdbcType=VARCHAR},
+      hash = #{hash,jdbcType=VARCHAR},
+      nonce = #{nonce,jdbcType=VARCHAR},
+      block_hash = #{blockHash,jdbcType=VARCHAR},
+      from = #{from,jdbcType=VARCHAR},
+      contract_address = #{contractAddress,jdbcType=VARCHAR},
+      to = #{to,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      token_name = #{tokenName,jdbcType=VARCHAR},
+      token_symbol = #{tokenSymbol,jdbcType=VARCHAR},
+      token_decimal = #{tokenDecimal,jdbcType=VARCHAR},
+      transaction_index = #{transactionIndex,jdbcType=INTEGER},
+      gas = #{gas,jdbcType=VARCHAR},
+      gas_price = #{gasPrice,jdbcType=VARCHAR},
+      gas_used = #{gasUsed,jdbcType=VARCHAR},
+      cumulative_gas_used = #{cumulativeGasUsed,jdbcType=VARCHAR},
+      input = #{input,jdbcType=VARCHAR},
+      confirmations = #{confirmations,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

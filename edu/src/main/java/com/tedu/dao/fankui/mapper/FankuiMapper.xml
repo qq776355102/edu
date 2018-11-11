@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.fankui.mapper.FankuiMapper">
+  <resultMap id="BaseResultMap" type="com.tedu.domain.fankui.Fankui">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="acount" jdbcType="VARCHAR" property="acount" />
+    <result column="conten" jdbcType="VARCHAR" property="conten" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, acount, conten, date, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tedu_fankui
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tedu_fankui
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tedu.domain.fankui.Fankui">
+    insert into tedu_fankui (id, acount, conten, 
+      date, status)
+    values (#{id,jdbcType=INTEGER}, #{acount,jdbcType=VARCHAR}, #{conten,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tedu.domain.fankui.Fankui">
+    insert into tedu_fankui
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="acount != null">
+        acount,
+      </if>
+      <if test="conten != null">
+        conten,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="acount != null">
+        #{acount,jdbcType=VARCHAR},
+      </if>
+      <if test="conten != null">
+        #{conten,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tedu.domain.fankui.Fankui">
+    update tedu_fankui
+    <set>
+      <if test="acount != null">
+        acount = #{acount,jdbcType=VARCHAR},
+      </if>
+      <if test="conten != null">
+        conten = #{conten,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tedu.domain.fankui.Fankui">
+    update tedu_fankui
+    set acount = #{acount,jdbcType=VARCHAR},
+      conten = #{conten,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.user.mapper.FansMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tedu.domain.user.Fans">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="fan_id" jdbcType="VARCHAR" property="fanId" />
+		<result column="status" jdbcType="TINYINT" property="status" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, fan_id, status
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_fans
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="getCountByUserIdOrFanId"
+		parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(1)
+		FROM tedu_fans
+		WHERE 1 = 1
+		<if test="userId != '' and userId != null">
+			and USER_ID = #{userId}
+		</if>
+		<if test="fanId != '' and fanId != null">
+			and FAN_ID =#{fanId}
+		</if>
+	</select>
+	<select id="getList" parameterType="com.tedu.domain.user.Fans"
+		resultType="com.tedu.domain.user.Fans">
+
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tedu_fans
+		WHERE STATUS = 1
+
+		<if test='id != null and id != "" and id != "null"'>
+			AND ID = #{id} 
+		</if>
+
+		<if test='userId != null and userId != "" and id !="null"'>
+			AND USER_ID = #{userId} 
+		</if>
+
+		<if
+			test='fanId != null and fanId != "" and fanId != "null" and fanId != "undefined"'>
+			AND FAN_ID = #{fanId}
+		</if>
+
+		<!-- <if test='status != -1'>
+			AND STATUS = #{status} 
+		</if> -->
+	</select>
+	<select id="getCheckBy"
+		parameterType="com.tedu.domain.user.Fans"
+		resultType="java.lang.Integer">
+
+		SELECT 
+		count(1)
+		FROM tedu_fans
+		WHERE 1 = 1
+
+		<if test='id != -1'>
+			AND ID = #{id} 
+		</if>
+
+		<if test='userId != -1'>
+			AND USER_ID = #{userId}
+		</if>
+
+		<if
+			test='fanId != null and fanId != "" and fanId != "null" and fanId != "undefined"'>
+			AND FAN_ID = #{fanId} 
+		</if>
+
+		<if test='status != -1'>
+			AND STATUS = #{status}
+		</if>
+
+	</select>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from tedu_fans
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tedu.domain.user.Fans">
+		insert into tedu_fans (id,
+		user_id, fan_id,
+		status)
+		values (#{id,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER},
+		#{fanId,jdbcType=VARCHAR},
+		#{status,jdbcType=TINYINT})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tedu.domain.user.Fans">
+		insert into tedu_fans
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="fanId != null">
+				fan_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="fanId != null">
+				#{fanId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tedu.domain.user.Fans">
+		update tedu_fans
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="fanId != null">
+				fan_id = #{fanId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=TINYINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tedu.domain.user.Fans">
+		update tedu_fans
+		set user_id =
+		#{userId,jdbcType=INTEGER},
+		fan_id = #{fanId,jdbcType=VARCHAR},
+		status =
+		#{status,jdbcType=TINYINT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

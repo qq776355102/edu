@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.tedu.dao.originalaudio.mapper.OriginalAudioMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tedu.domain.originalaudio.OriginalAudio">
+		<id column="ginal" jdbcType="INTEGER" property="ginal" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="original_file_name" jdbcType="VARCHAR"
+			property="originalFileName" />
+		<result column="file_length" jdbcType="VARCHAR"
+			property="fileLength" />
+		<result column="hz" jdbcType="VARCHAR" property="hz" />
+		<result column="volume" jdbcType="VARCHAR" property="volume" />
+		<result column="channels" jdbcType="VARCHAR"
+			property="channels" />
+		<result column="bit_rate" jdbcType="VARCHAR" property="bitRate" />
+		<result column="date" jdbcType="TIMESTAMP" property="date" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="path" jdbcType="VARCHAR" property="path" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ginal, user_id, original_file_name, file_length, hz, volume, channels,
+		bit_rate,
+		date, status, path
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_original_audio
+		where ginal = #{ginal,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_original_audio
+		where user_id = #{userId} and original_file_name = #{originalFileName} and file_length = #{length}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from tedu_original_audio
+		where ginal = #{ginal,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="com.tedu.domain.originalaudio.OriginalAudio">
+		insert into tedu_original_audio (ginal, user_id, original_file_name,
+		file_length, hz, volume,
+		channels, bit_rate, date,
+		status, path)
+		values (#{ginal,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{originalFileName,jdbcType=VARCHAR},
+		#{fileLength,jdbcType=VARCHAR}, #{hz,jdbcType=VARCHAR}, #{volume,jdbcType=VARCHAR},
+		#{channels,jdbcType=VARCHAR}, #{bitRate,jdbcType=VARCHAR},
+		#{date,jdbcType=TIMESTAMP},
+		#{status,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tedu.domain.originalaudio.OriginalAudio">
+		insert into tedu_original_audio
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ginal != null">
+				ginal,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="originalFileName != null">
+				original_file_name,
+			</if>
+			<if test="fileLength != null">
+				file_length,
+			</if>
+			<if test="hz != null">
+				hz,
+			</if>
+			<if test="volume != null">
+				volume,
+			</if>
+			<if test="channels != null">
+				channels,
+			</if>
+			<if test="bitRate != null">
+				bit_rate,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="path != null">
+				path,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ginal != null">
+				#{ginal,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="originalFileName != null">
+				#{originalFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileLength != null">
+				#{fileLength,jdbcType=VARCHAR},
+			</if>
+			<if test="hz != null">
+				#{hz,jdbcType=VARCHAR},
+			</if>
+			<if test="volume != null">
+				#{volume,jdbcType=VARCHAR},
+			</if>
+			<if test="channels != null">
+				#{channels,jdbcType=VARCHAR},
+			</if>
+			<if test="bitRate != null">
+				#{bitRate,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="path != null">
+				#{path,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tedu.domain.originalaudio.OriginalAudio">
+		update tedu_original_audio
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="originalFileName != null">
+				original_file_name = #{originalFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="fileLength != null">
+				file_length = #{fileLength,jdbcType=VARCHAR},
+			</if>
+			<if test="hz != null">
+				hz = #{hz,jdbcType=VARCHAR},
+			</if>
+			<if test="volume != null">
+				volume = #{volume,jdbcType=VARCHAR},
+			</if>
+			<if test="channels != null">
+				channels = #{channels,jdbcType=VARCHAR},
+			</if>
+			<if test="bitRate != null">
+				bit_rate = #{bitRate,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				date = #{date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="path != null">
+				path = #{path,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ginal = #{ginal,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tedu.domain.originalaudio.OriginalAudio">
+		update tedu_original_audio
+		set user_id = #{userId,jdbcType=INTEGER},
+		original_file_name = #{originalFileName,jdbcType=VARCHAR},
+		file_length = #{fileLength,jdbcType=VARCHAR},
+		hz = #{hz,jdbcType=VARCHAR},
+		volume = #{volume,jdbcType=VARCHAR},
+		channels = #{channels,jdbcType=VARCHAR},
+		bit_rate = #{bitRate,jdbcType=VARCHAR},
+		date = #{date,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=INTEGER},
+		path = #{path,jdbcType=VARCHAR}
+		where ginal = #{ginal,jdbcType=INTEGER}
+	</update>
+</mapper>

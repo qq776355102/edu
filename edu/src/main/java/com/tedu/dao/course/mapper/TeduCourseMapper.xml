@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.dao.course.mapper.TeduCourseMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tedu.domain.course.TeduCourse">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="introduction" jdbcType="VARCHAR"
+			property="introduction" />
+		<result column="date" jdbcType="TIMESTAMP" property="date" />
+		<result column="notes_buy" jdbcType="VARCHAR"
+			property="notesBuy" />
+		<result column="picture" jdbcType="VARCHAR" property="picture" />
+		<result column="cost" jdbcType="VARCHAR" property="cost" />
+		<result column="resource" jdbcType="VARCHAR"
+			property="resource" />
+		<result column="category" jdbcType="TINYINT"
+			property="category" />
+		<result column="status" jdbcType="TINYINT" property="status" />
+		<result column="bofang_count" jdbcType="INTEGER"
+			property="bofangCount" />
+		<result column="length" jdbcType="VARCHAR" property="length" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, title, user_id, introduction, date, notes_buy, picture,
+		cost,
+		resource, category,
+		status, bofang_count, length
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_course
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+<!-- 	<select id="getTotal" resultType="java.lang.Integer">
+		select count(1) from tedu_course where status=1
+	</select> -->
+	<select id="getTotal" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select <include refid="Base_Column_List" /> from tedu_course where status=1 and title like concat('%',#{title},'%')
+	</select>
+	<select id="getList"
+		parameterType="com.tedu.domain.course.TeduCourse"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_course 
+		<where>
+		 status= 1
+			<if test="id != null">
+				and id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="title != null">
+				and title = #{title,jdbcType=VARCHAR}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId,jdbcType=INTEGER}
+			</if>
+			<if test="introduction != null">
+				and introduction = #{introduction,jdbcType=VARCHAR}
+			</if>
+			<if test="date != null">
+				and date = #{date,jdbcType=VARCHAR}
+			</if>
+			<if test="notesBuy != null">
+				and notes_buy = #{notesBuy,jdbcType=VARCHAR}
+			</if>
+			<if test="picture != null">
+				and picture = #{picture,jdbcType=VARCHAR}
+			</if>
+			<if test="cost != null">
+				and cost = #{cost,jdbcType=VARCHAR}
+			</if>
+			<if test="resource != null">
+				and resource = #{resource,jdbcType=VARCHAR}
+			</if>
+			<if test="category != null">
+				and category = #{category,jdbcType=TINYINT}
+			</if>
+		<!-- 	<if test="status != null">
+				and status = #{status,jdbcType=TINYINT}
+			</if> -->
+			<if test="bofangCount != null">
+				and bofang_count = #{bofangCount,jdbcType=INTEGER}
+			</if>
+			<if test="length != null">
+				and length = #{length,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="getPageList"
+		parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tedu_course
+		<where>
+			<if test='bean != null'>
+
+				<if test='bean.id != null'>
+					AND ID = #{bean.id} 
+				</if>
+				<if
+					test='bean.title != null and bean.title != "" and bean.title != "null" and bean.title != "undefined"'>
+					AND TITLE = #{bean.title} 
+				</if>
+				<if test='bean.userId != null'>
+					AND USER_ID = #{bean.userId}
+				</if>
+				<if test='bean.introduction != null'>
+					AND INTRODUCTION = #{bean.introduction} 
+				</if>
+				<if
+					test='bean.date != null and bean.date != "" and bean.date != "null" and bean.date != "undefined"'>
+					AND DATE = #{bean.date}
+				</if>
+				<if
+					test='bean.notesBuy != null and bean.notesBuy != "" and bean.notesBuy != "null" and bean.notesBuy != "undefined"'>
+					AND NOTES_BUY = #{bean.notesBuy}
+				</if>
+				<if
+					test='bean.picture != null and bean.picture != "" and bean.picture != "null" and bean.picture != "undefined"'>
+					AND PICTURE = #{bean.picture}
+				</if>
+				<if
+					test='bean.cost != null and bean.cost != "" and bean.cost != "null" and bean.cost != "undefined"'>
+					AND COST = #{bean.cost}
+				</if>
+				<if
+					test='bean.resource != null and bean.resource != "" and bean.resource != "null" and bean.resource != "undefined"'>
+					AND RESOURCE = #{bean.resource}
+				</if>
+				<if test='bean.category !=null and bean.category !="" and bean.category !="null"'>
+					AND CATEGORY = #{bean.category}
+				</if>
+					AND STATUS = 1 
+			</if>
+		</where>
+
+		LIMIT #{offset} ,#{rows}
+
+	</select>
+
+
+
+
+	<select id="getLastestRecordGroupByUserIdAndBy"
+		parameterType="java.util.HashMap"
+		resultType="com.tedu.domain.course.TeduCourse">
+
+		SELECT /* getPageList+@com.tedu.dao.course.mapper.TeduCourse.xml */
+		MAX(tc.ID) AS "id" 
+		,tc.TITLE AS "title"
+		,tc.USER_ID
+		AS "userId" 
+		,tc.INTRODUCTION AS "introduction" 
+		,tc.DATE AS "date"
+		,tc.NOTES_BUY AS "notesBuy" 
+		,tc.PICTURE AS "picture"
+		,tc.COST AS "cost" 
+		,tc.RESOURCE AS "resource" 
+		,tc.CATEGORY AS "category" 
+		,tc.STATUS AS "status" 
+		,tc.BOFANG_COUNT AS
+		"bofangCount"
+		,tc.LENGTH AS "length"
+		FROM TEDU_COURSE tc
+		WHERE 1 =
+		1
+
+		<if test='bean != null'>
+
+			<if test='bean.id != -1'>
+				AND tc.ID = #{bean.id} 
+			</if>
+
+			<if
+				test='bean.title != null and bean.title != "" and bean.title != "null" and bean.title != "undefined"'>
+				AND tc.TITLE = #{bean.title} 
+			</if>
+
+			<if test='bean.userId != -1'>
+				AND tc.USER_ID = #{bean.userId} 
+			</if>
+
+			<if test='bean.introduction != null'>
+				AND tc.INTRODUCTION = #{bean.introduction}
+			</if>
+
+			<if
+				test='bean.date != null and bean.date != "" and bean.date != "null" and bean.date != "undefined"'>
+				AND tc.DATE = #{bean.date} 
+			</if>
+
+			<if
+				test='bean.notesBuy != null and bean.notesBuy != "" and bean.notesBuy != "null" and bean.notesBuy != "undefined"'>
+				AND tc.NOTES_BUY = #{bean.notesBuy}
+			</if>
+
+			<if
+				test='bean.picture != null and bean.picture != "" and bean.picture != "null" and bean.picture != "undefined"'>
+				AND tc.PICTURE = #{bean.picture} 
+			</if>
+
+			<if
+				test='bean.cost != null and bean.cost != "" and bean.cost != "null" and bean.cost != "undefined"'>
+				AND tc.COST = #{bean.cost} 
+			</if>
+
+			<if
+				test='bean.resource != null and bean.resource != "" and bean.resource != "null" and bean.resource != "undefined"'>
+				AND tc.RESOURCE = #{bean.resource}
+			</if>
+
+			<if test='bean.category != -1'>
+				AND tc.CATEGORY = #{bean.category} 
+			</if>
+
+			<if test='bean.status != -1'>
+				AND tc.STATUS = #{bean.status} 
+			</if>
+		</if>
+		group by tc.USER_ID
+
+		<if test='orderBy != null and orderBy != ""'>
+			ORDER BY ${orderBy} 
+		</if>
+
+		<!-- 分页条 -->
+		LIMIT #{offset} ,#{rows}
+		<!-- /分页条 -->
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from tedu_course
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="com.tedu.domain.course.TeduCourse">
+		insert into tedu_course (id, title, user_id,
+		introduction, date, notes_buy,
+		picture, cost, resource,
+		category,
+		status, bofang_count,
+		length)
+		values (#{id,jdbcType=INTEGER},
+		#{title,jdbcType=VARCHAR},
+		#{userId,jdbcType=INTEGER},
+		#{introduction,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR},
+		#{notesBuy,jdbcType=VARCHAR},
+		#{picture,jdbcType=VARCHAR},
+		#{cost,jdbcType=VARCHAR},
+		#{resource,jdbcType=VARCHAR},
+		#{category,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
+		#{bofangCount,jdbcType=INTEGER},
+		#{length,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tedu.domain.course.TeduCourse" keyColumn="id" useGeneratedKeys="true">
+		insert into tedu_course
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="introduction != null">
+				introduction,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="notesBuy != null">
+				notes_buy,
+			</if>
+			<if test="picture != null">
+				picture,
+			</if>
+			<if test="cost != null">
+				cost,
+			</if>
+			<if test="resource != null">
+				resource,
+			</if>
+			<if test="category != null">
+				category,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="bofangCount != null">
+				bofang_count,
+			</if>
+			<if test="length != null">
+				length,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="introduction != null">
+				#{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=VARCHAR},
+			</if>
+			<if test="notesBuy != null">
+				#{notesBuy,jdbcType=VARCHAR},
+			</if>
+			<if test="picture != null">
+				#{picture,jdbcType=VARCHAR},
+			</if>
+			<if test="cost != null">
+				#{cost,jdbcType=VARCHAR},
+			</if>
+			<if test="resource != null">
+				#{resource,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				#{category,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="bofangCount != null">
+				#{bofangCount,jdbcType=INTEGER},
+			</if>
+			<if test="length != null">
+				#{length,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tedu.domain.course.TeduCourse">
+		update tedu_course
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="introduction != null">
+				introduction = #{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				date = #{date,jdbcType=VARCHAR},
+			</if>
+			<if test="notesBuy != null">
+				notes_buy = #{notesBuy,jdbcType=VARCHAR},
+			</if>
+			<if test="picture != null">
+				picture = #{picture,jdbcType=VARCHAR},
+			</if>
+			<if test="cost != null">
+				cost = #{cost,jdbcType=VARCHAR},
+			</if>
+			<if test="resource != null">
+				resource = #{resource,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				category = #{category,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="bofangCount != null">
+				bofang_count = #{bofangCount,jdbcType=INTEGER},
+			</if>
+			<if test="length != null">
+				length = #{length,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tedu.domain.course.TeduCourse">
+		update tedu_course
+		set title = #{title,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=INTEGER},
+		introduction =
+		#{introduction,jdbcType=VARCHAR},
+		date = #{date,jdbcType=VARCHAR},
+		notes_buy = #{notesBuy,jdbcType=VARCHAR},
+		picture =
+		#{picture,jdbcType=VARCHAR},
+		cost = #{cost,jdbcType=VARCHAR},
+		resource =
+		#{resource,jdbcType=VARCHAR},
+		category = #{category,jdbcType=TINYINT},
+		status = #{status,jdbcType=TINYINT},
+		bofang_count =
+		#{bofangCount,jdbcType=INTEGER},
+		length = #{length,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

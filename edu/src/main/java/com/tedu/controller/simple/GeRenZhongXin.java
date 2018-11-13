@@ -165,9 +165,9 @@ public class GeRenZhongXin extends BaseController{
 			fan.setFanId(userFanId+"");
 			int i = userfansService.checkUserfans(fan);
 			if (i>0) {
-				jsonObject.put("guanzu", true);
+				jsonObject.put("guanzhu", true);
 			}else {
-				jsonObject.put("guanzu", false);
+				jsonObject.put("guanzhu", false);
 			}
 			List<TeduCourseVo> courseList = courseService.getPageListById(userFanId, offset, rows);
 			jsonObject.put("courseList", courseList);

@@ -183,17 +183,23 @@ public class CourseController extends BaseController {
 	 */
 	@RequestMapping("/uploadCourses")
 	public Object uploadCourses(@RequestParam(value = "categoryId", required = true) Integer categoryId,
-			@RequestParam(value = "title", required = true) String title, String userId, MultipartFile audio,
+			@RequestParam(value = "title", required = true) String title, Integer userId, MultipartFile audio,
 			MultipartFile image, HttpServletRequest request) throws Exception {
 		BaseUser baseUser = getBaseUser();
+
 		if (baseUser == null) {
-			throw new MedicalException("请先登录之后再操作");
+			if (userId != null) {
+				baseUser.setId(userId);
+			}else {
+				throw new MedicalException("请先登录之后再操作");
+			}
 		}
+		
 		User u = userService.getUserInfoById(baseUser.getId());
 		if (u.getIdentity() != 2) {
 			throw new MedicalException("请先申请成为讲师");
 		}
-		insertCourseMoreThan2(categoryId, title, userId, audio, image, baseUser);
+		insertCourseMoreThan2(categoryId, title, userId.toString(), audio, image, baseUser);
 		return ResponseDTO.setStaticResult("上传成功");
 	}
 

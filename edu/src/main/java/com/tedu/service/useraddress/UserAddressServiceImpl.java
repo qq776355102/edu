@@ -17,4 +17,8 @@ public class UserAddressServiceImpl {
 	public UserAddress getByAddress(String address) {
 		 return  mapper.selectByAddress(address);
 	}
+	
+	public UserAddress getByUserId(int userId) {
+		return mapper.selectByUserId(userId);
+	}
 }

@@ -64,14 +64,18 @@
 	<!-- <property name="url" value="jdbc:mysql://150.109.105.45:3306/tedu?useUnicode=true&amp;characterEncoding=utf-8" 
 		/> -->
 
-	<!-- <property name="url" value="jdbc:mysql://150.109.105.45:3306/tedu?useUnicode=true&amp;characterEncoding=utf-8" 
-		/> -->
+
+	<!--
+	
+			<property name="url" value="jdbc:mysql://150.109.105.45:3306/tedu?useUnicode=true&amp;characterEncoding=utf-8" 
+		/>
+	 -->
 	<bean id="dataSource"
 		class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
 		destroy-method="close">
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver" />
-		<property name="url"
+ <property name="url"
 			value="jdbc:mysql://127.0.0.1:3306/tedu?useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
@@ -123,7 +127,7 @@
 		pool-size="5" /> <task:scheduler id="defaultTaskScheduler" pool-size="1" 
 		/> -->
 
-	<bean id="sysConfig" class="com.tedu.common.core.SysProperties">
+	<bean id="sysProperties" class="com.tedu.common.core.SysProperties">
 		<property name="locations">
 			<list>
 				<value>classpath*:/sys.properties</value>

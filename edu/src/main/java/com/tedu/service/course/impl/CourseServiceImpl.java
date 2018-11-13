@@ -285,6 +285,8 @@ public class CourseServiceImpl{
 			}
 			BeanUtils.copyProperties(tc, teduCourseVo);
 			teduCourseVo.setCategoryDesc(album.getName());
+			CourseOrder courseOrderByid = courserOrderService.getCourseOrderByid(tc.getId());
+			teduCourseVo.setOrder(courseOrderByid.getOrder());
 			list.add(teduCourseVo);
 		}
 		return list;
@@ -334,6 +336,8 @@ public class CourseServiceImpl{
 				}
 			}
 			jsonObject.put("albumName", album.getName());
+			CourseOrder courseOrderByid = courserOrderService.getCourseOrderByid(tc.getId());
+			jsonObject.put("order", courseOrderByid.getOrder());
 			jsonArray.add(jsonObject);
 		}
 		return jsonArray;

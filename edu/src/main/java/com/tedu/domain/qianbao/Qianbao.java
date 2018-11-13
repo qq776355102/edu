@@ -36,7 +36,7 @@ public class Qianbao {
     /**
      * 时间
      */
-    private Date date;
+    private String date;
 
     /**
      * 币种
@@ -51,7 +51,7 @@ public class Qianbao {
     /**
      * 块高
      */
-    private Integer blockNumber;
+    private String blockNumber;
 
     /**
      * 合约id
@@ -66,7 +66,7 @@ public class Qianbao {
     /**
      * 余额
      */
-    private byte[] balance;
+    private String balance;
 
     /**
      * 主键id
@@ -168,7 +168,7 @@ public class Qianbao {
      * 时间
      * @return date 时间
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -176,7 +176,7 @@ public class Qianbao {
      * 时间
      * @param date 时间
      */
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -216,7 +216,7 @@ public class Qianbao {
      * 块高
      * @return block_number 块高
      */
-    public Integer getBlockNumber() {
+    public String getBlockNumber() {
         return blockNumber;
     }
 
@@ -224,7 +224,7 @@ public class Qianbao {
      * 块高
      * @param blockNumber 块高
      */
-    public void setBlockNumber(Integer blockNumber) {
+    public void setBlockNumber(String blockNumber) {
         this.blockNumber = blockNumber;
     }
 
@@ -264,7 +264,7 @@ public class Qianbao {
      * 余额
      * @return balance 余额
      */
-    public byte[] getBalance() {
+    public String getBalance() {
         return balance;
     }
 
@@ -272,7 +272,7 @@ public class Qianbao {
      * 余额
      * @param balance 余额
      */
-    public void setBalance(byte[] balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 }

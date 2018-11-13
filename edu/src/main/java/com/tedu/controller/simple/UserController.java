@@ -95,11 +95,13 @@ public class UserController extends BaseController{
 	@RequestMapping("/loginOfIndentifyCode")
 	public Object ApplyToBecomeALecturer(HttpServletRequest request,@RequestParam(required=true)String phoneNumber,@RequestParam(required = true)String indentifyCode) throws MedicalException {
 		Sms sms = smsService.getLastestCode(phoneNumber);
+		int id = -1;
 		if (sms.getIdenifyCode().equals(indentifyCode)) {
 			//登录成功 ,session,保存会话
 			User u = userService.getUserByPhonenumber(phoneNumber);
 			BaseUser bu = new BaseUser();
 			bu.setId(u.getId());
+			id = u.getId();
 			bu.setIdentity(u.getIdentity());
 			bu.setPhone(u.getPhone());
 			request.getSession().setAttribute("user", bu);
@@ -110,7 +112,7 @@ public class UserController extends BaseController{
 			responseDTO.setErrorinfo("验证码有误", "5");
 			return responseDTO;
 		}
-		return ResponseDTO.setStaticResult("登录成功");
+		return ResponseDTO.setStaticResult(id);
 	}
 	
 	/**
@@ -124,13 +126,15 @@ public class UserController extends BaseController{
 	@RequestMapping("/loginOfPassWord")
 	public Object loginOfPassWord(HttpServletRequest request,@RequestParam(required=true)String phoneNumber,@RequestParam(required=true)String passWord) throws MedicalException {
 		User u = userService.getUserByPhoneAndPassWord(phoneNumber, passWord);
+		int id = -1;
 		if (u != null) {
 			BaseUser bu = new BaseUser();
 			bu.setId(u.getId());
+			id=u.getId();
 			bu.setIdentity(u.getIdentity());
 			bu.setPhone(u.getPhone());
 			request.getSession().setAttribute("user", bu);
-			return ResponseDTO.setStaticResult("登录成功");
+			return ResponseDTO.setStaticResult(id);
 		}
 		ResponseDTO responseDTO = new ResponseDTO();
 		return responseDTO.setErrorinfo("登录失败", "6");

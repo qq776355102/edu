@@ -14,10 +14,9 @@
     <result column="block_number" jdbcType="INTEGER" property="blockNumber" />
     <result column="contract_id" jdbcType="VARCHAR" property="contractId" />
     <result column="status" jdbcType="INTEGER" property="status" />
+     <result column="balance" jdbcType="VARCHAR" property="balance" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tedu.domain.qianbao.Qianbao">
-    <result column="balance" jdbcType="VARBINARY" property="balance" />
-  </resultMap>
+
   <sql id="Base_Column_List">
     id, userId, from_address, to_address, type, content, date, coin_type, txid, block_number, 
     contract_id, status
@@ -25,7 +24,7 @@
   <sql id="Blob_Column_List">
     balance
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -34,7 +33,24 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="getPageList" parameterType="java.util.HashMap"  resultMap="ResultMapWithBLOBs">
+    <select id="selectBytxid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tedu_qianbao
+    where txid = #{txid}
+  </select>
+    <select id="selectLastByAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tedu_qianbao
+    where to_address = #{toaddress}
+  </select>
+  
+  <select id="getPageList" parameterType="java.util.HashMap"  resultMap="BaseResultMap">
   	    select 
     <include refid="Base_Column_List" />
     ,

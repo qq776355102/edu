@@ -31,6 +31,10 @@ public interface QianbaoMapper {
      */
     Qianbao selectByPrimaryKey(Integer id);
     
+    Qianbao selectBytxid(String txid);
+    
+    Qianbao selectLastByAddress(String toaddress);
+    
     /**
      * 6.分页查询
      * 注: 支持分页查询、多条件查询、模糊查询、日期比较查询等操作.

@@ -185,6 +185,7 @@ public class UserServiceImpl {
 			User user = new User();
 			user.setId(userId);
 			user.setPassWord(newPassWord);
+			user.setStatus(1);
 			try {
 				mapper.getUpdateByUser(user);
 			} catch (Exception e) {
@@ -206,6 +207,7 @@ public class UserServiceImpl {
 		User user = new User();
 		user.setId(userId);
 		user.setPassWord(passWord);
+		user.setStatus(1);
 		try {
 			mapper.getUpdateByUser(user);
 		} catch (Exception e) {

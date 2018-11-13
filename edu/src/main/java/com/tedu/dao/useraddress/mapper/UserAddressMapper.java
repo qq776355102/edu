@@ -25,7 +25,7 @@ public interface UserAddressMapper {
      *
      * @mbg.generated 2018-10-24
      */
-    UserAddress selectByPrimaryKey(Integer id);
+    UserAddress selectByUserId(Integer userId);
     
     UserAddress selectByAddress(String address);
 
